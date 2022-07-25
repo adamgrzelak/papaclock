@@ -1,8 +1,9 @@
 body {
   background-color: lightblue;
-  padding: 3%;
+  padding: 0 3%;
 }
 
 .map {
+  max-height: 95%;
   margin: auto;
 }

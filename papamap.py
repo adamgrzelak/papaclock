@@ -1,21 +1,30 @@
 from datetime import datetime, timedelta
+import pytz
 import pandas as pd
 import folium
+
+
+def load_cities():
+    """
+    Load the dataframe with world cities.
+    """
+    return pd.read_csv("worldcities.csv", index_col=False)
 
 
 def get_papa_time():
     """
     Get datetime object with current UTC date and 21:37 time.
     """
-    date = datetime.utcnow()
-    return date.replace(hour=21, minute=37, second=0, microsecond=0)
+    now = datetime.now(tz=pytz.UTC)
+    papatime = now.replace(hour=21, minute=37, second=0, microsecond=0)
+    return papatime
 
 
 def get_papa_meridian():
     """
-    Get the meridian at which it is 21:37.
+    Get the meridian at which the time is 21:37.
     """
-    now = datetime.utcnow()
+    now = datetime.now(tz=pytz.UTC)
     papa = get_papa_time()
     delta = papa - now
     angle = delta.total_seconds() / 240
@@ -25,16 +34,43 @@ def get_papa_meridian():
         return -round((360 - angle), 2)
 
 
+def get_nearest_timezome():
+    """
+    Find major cities where 21:37 is approaching
+    (within one hour).
+    """
+    df = pd.DataFrame({"timezone": pytz.common_timezones})
+    df["time"] = df["timezone"].apply(lambda x: datetime.now(tz=pytz.timezone(x)))
+    df["papa"] = df["time"].apply(lambda x: x.replace(hour=21, minute=37, second=0, microsecond=0))
+    df["delta"] = df["papa"] - df["time"]
+    df = df[(df["delta"] > timedelta(hours=0)) & (df["delta"] < timedelta(hours=1))]
+    df["city"] = df["timezone"].apply(lambda x: str(x.split("/")[-1])).astype(object)
+    places = load_cities().set_index("city")
+    df = df.set_index("city")
+    joint = df.join(places, how="inner").reset_index()
+    joint = joint[joint["population"] >= 1000000]
+    joint["time"] = joint["time"].apply(lambda x: x.strftime("%H:%M"))
+    return joint[["city", "country", "lat", "lng", "time"]]
+
+
 def get_places(meridian):
-    df = pd.read_csv("worldcities.csv")
+    """
+    Get a dataframe of top 5 500k+ cities
+    closest to the papa meridian.
+    """
+    df = load_cities()
     df["diff"] = (df["lng"] - meridian).abs()
     df = df[df["population"] >= 500000]
-    return df.sort_values("diff").head()
+    return df.sort_values("diff").head(10)
 
 
 def create_map(meridian):
+    """
+    Create HTML code for a Folium map with highlighted papa meridian
+    and markers with closest places.
+    """
     my_map = folium.Map(zoom_start=5)
-    folium.PolyLine([[89.9, meridian], [-89.9, meridian]], color="yellow", weight=3).add_to(my_map)
+    folium.PolyLine([[89.9, meridian], [-89.9, meridian]], color="yellow", weight=5).add_to(my_map)
     places = get_places(meridian)
     places["label"] = places.apply(lambda x: f"{x['city']}, {x['country']}", axis=1)
     places.apply(lambda x: folium.Marker(location=[x["lat"], x["lng"]],
@@ -44,5 +80,6 @@ def create_map(meridian):
 
 
 if __name__ == "__main__":
-    papa_meridian = get_papa_meridian()
-    print(get_places(papa_meridian))
+    # papa_meridian = get_papa_meridian()
+    # print(get_places(papa_meridian))
+    print(get_nearest_timezome())
