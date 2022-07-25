@@ -2,6 +2,7 @@ from datetime import datetime, timedelta
 import pytz
 import pandas as pd
 import folium
+from flask import Markup
 
 
 def load_cities():
@@ -61,7 +62,7 @@ def get_places(meridian):
     df = load_cities()
     df["diff"] = (df["lng"] - meridian).abs()
     df = df[df["population"] >= 500000]
-    return df.sort_values("diff").head(10)
+    return df.sort_values("diff").head()
 
 
 def create_map(meridian):
@@ -69,14 +70,22 @@ def create_map(meridian):
     Create HTML code for a Folium map with highlighted papa meridian
     and markers with closest places.
     """
-    my_map = folium.Map(zoom_start=5)
+    figure = folium.Figure(width=1200, height=600)
+    my_map = folium.Map(zoom_start=5, tiles="stamentoner")
+    my_map.add_to(figure)
+    # folium.TileLayer("stamentoner").add_to(my_map)
     folium.PolyLine([[89.9, meridian], [-89.9, meridian]], color="yellow", weight=5).add_to(my_map)
     places = get_places(meridian)
-    places["label"] = places.apply(lambda x: f"{x['city']}, {x['country']}", axis=1)
+    places["label"] = places.apply(lambda x:
+                                   Markup(f"<b>{x['city']}</b><br>{x['country']}"),
+                                   axis=1)
     places.apply(lambda x: folium.Marker(location=[x["lat"], x["lng"]],
-                                         popup=x["label"]).add_to(my_map),
+                                         popup=folium.Popup(
+                                             folium.IFrame(x["label"],
+                                                           width=150, height=60)
+                                         )).add_to(my_map),
                  axis=1)
-    return my_map._repr_html_()
+    return figure._repr_html_()
 
 
 if __name__ == "__main__":
