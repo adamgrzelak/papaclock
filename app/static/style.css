@@ -8,12 +8,13 @@ body {
 }
 
 .main-div {
+  margin: auto;
   padding: 0 3% 1%;
 }
 
 .container {
   padding: 0 15%;
-  margin: 3rem 0 2rem;
+  margin: 3rem auto 2rem;
 }
 
 .heading {
@@ -58,7 +59,7 @@ th, td {
 .papaj-large {
   max-width: 8rem;
   max-height: 10rem;
-  margin: 3rem 8rem 1rem 8rem;
+  margin: 3% 5% 3% 5%;
 }
 
 .left {
@@ -76,6 +77,24 @@ a {
 
 a:hover {
   color: #F2DF3A;
+}
+
+@media (max-width: 1200px) {
+  .main-div {
+    margin: auto;
+    padding: 0 0 1%;
+  }
+
+  .papaj-large {
+    max-width: 8rem;
+    max-height: 10rem;
+    margin: 5% 8% 5% 8%;
+  }
+
+  .container {
+    padding: 0 3%;
+  }
+
 }
 
 /* Pallette:
