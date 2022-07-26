@@ -4,13 +4,13 @@
 
 <div class="container">
   <a href="{{url_for('home')}}" class="heading"><img src="static/papaj.png" alt="" class="papaj left heading"></a>
-  <h2 class="heading">PapaZones</h2>
+  <h2 class="heading">Papa Timezones</h2>
   <a href="{{url_for('meridian')}}" class="heading"><img src="static/papaj.png" alt="" class="papaj right heading"></a>
 </div>
-<div class="table" id="papatable">
-  {{ table }}
+<div class="container" id="papamessage">
 </div>
-<div class="container" id="papaicon">
+<div class="container table" id="papatable">
+  {{ table }}
 </div>
 <script src="static/table.js" charset="utf-8"></script>
 

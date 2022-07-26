@@ -3,15 +3,17 @@ body {
   text-align: center;
   color: #F6F6F6;
   font-family: Comfortaa;
+  margin: 0;
+  padding: 0;
 }
 
 .main-div {
-  padding: 3%;
+  padding: 0 3% 1%;
 }
 
 .container {
   padding: 0 15%;
-  margin: 1.5rem 0;
+  margin: 3rem 0 2rem;
 }
 
 .heading {
@@ -20,6 +22,10 @@ body {
 
 .quote {
   font-family: Kalam;
+}
+
+.message {
+  color: #F2DF3A;
 }
 
 .name {
@@ -36,6 +42,12 @@ body {
 table {
   margin: auto;
   font-family: Arial;
+  padding: 0 1rem;
+}
+
+th, td {
+  text-align: center;
+  padding: 0 1.5rem;
 }
 
 .papaj {
@@ -46,7 +58,7 @@ table {
 .papaj-large {
   max-width: 8rem;
   max-height: 10rem;
-  margin: 6rem 8rem 1rem 8rem;
+  margin: 3rem 8rem 1rem 8rem;
 }
 
 .left {

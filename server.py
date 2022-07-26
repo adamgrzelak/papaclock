@@ -30,13 +30,16 @@ def get_table():
             return val
     table = get_nearest_timezome()
     is_papatime = table["time"].apply(lambda x: "21:37" in x).any()
-    table = table.to_html(index=False, formatters={"time": yellow_hour}, escape=False)
+    table = table.to_html(index=False,
+                          formatters={"time": yellow_hour},
+                          escape=False)
     if is_papatime:
         return make_response({"table": table,
-                              "icon": "<img src='static/papaj.gif' alt=''>"})
+                              "message": "<img src='static/papaj.gif' alt=''>"
+                                          "<h2 class='message'>Gdzieś na świecie jest 21:37!</h2>"})
     else:
         return make_response({"table": table,
-                              "icon": ""})
+                              "message": "<h4 class='message'>21:37 nadchodzi w następujących miejscach:</h4>"})
 
 
 @app.route("/get_map")

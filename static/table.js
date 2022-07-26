@@ -3,7 +3,7 @@ setInterval(function() {
   fetch(myRequest).then(response => response.json()).then(function(data) {
     let data_table = document.getElementById("papatable");
     data_table.innerHTML = data.table;
-    let icon = document.getElementById("papaicon")
-    icon.innerHTML = data.icon;
+    let message = document.getElementById("papamessage")
+    message.innerHTML = data.message;
   });
 }, 100);
