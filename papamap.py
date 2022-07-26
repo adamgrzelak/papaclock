@@ -46,7 +46,7 @@ def get_nearest_timezome():
     df["delta"] = df.apply(lambda x: min(abs(x["papa"] - x["time"]), abs(x["time"] - x["papa"])), axis=1)
     df = df[(df["delta"] > timedelta(hours=0)) & (df["delta"] < timedelta(hours=1))]
     df = df[df["time"] < df["papa"]]
-    df["time"] = df["time"].apply(lambda x: x.strftime("%H:%M"))
+    df["time"] = df["time"].apply(lambda x: x.strftime("%H:%M:%S"))
     return df[["timezone", "time"]]
 
 
