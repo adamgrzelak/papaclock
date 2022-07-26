@@ -49,4 +49,5 @@ def get_map():
     return make_response({"papamap": Markup(papamap)})
 
 
-app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
