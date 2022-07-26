@@ -1,21 +1,41 @@
 body {
-  background-color: lightblue;
+  background-color: #0078AA;
   text-align: center;
+  color: #F6F6F6;
+  font-family: Comfortaa;
+}
+
+.main-div {
   padding: 3%;
+}
+
+.container {
+  padding: 0 15%;
+  margin: 1.5rem 0;
 }
 
 .heading {
   display: inline;
-  padding: 1% auto;
+}
+
+.quote {
+  font-family: Kalam;
+}
+
+.name {
+  font-family: Kalam;
+  text-align: right;
 }
 
 .map, .table {
   text-align: center;
+  color: #F6F6F6;
   margin: auto;
 }
 
 table {
   margin: auto;
+  font-family: Arial;
 }
 
 .papaj {
@@ -24,6 +44,27 @@ table {
 }
 
 .papaj-large {
-  max-width: 6rem;
-  max-height: 7.5rem;
+  max-width: 8rem;
+  max-height: 10rem;
+  margin: 6rem 8rem 1rem 8rem;
 }
+
+.left {
+  margin-right: 2rem;
+}
+
+.right {
+  margin-left: 2rem;
+}
+
+a {
+  color: #F6F6F6;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #F2DF3A;
+}
+
+/* Pallette:
+https://colorhunt.co/palette/0078aa3ab4f2f2df3af6f6f6 */

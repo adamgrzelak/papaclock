@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 import pytz
 import pandas as pd
 import folium
-from flask import Markup
 
 
 def load_cities():
@@ -45,7 +44,7 @@ def get_nearest_timezome():
     df["papa"] = df["time"].apply(lambda x: x.replace(hour=21, minute=37, second=0, microsecond=0))
     df["delta"] = df.apply(lambda x: min(abs(x["papa"] - x["time"]), abs(x["time"] - x["papa"])), axis=1)
     df = df[(df["delta"] > timedelta(hours=0)) & (df["delta"] < timedelta(hours=1))]
-    df = df[df["time"] < df["papa"]]
+    df = df[df["time"] < (df["papa"] + timedelta(minutes=1))]
     df["time"] = df["time"].apply(lambda x: x.strftime("%H:%M:%S"))
     return df[["timezone", "time"]]
 
@@ -57,8 +56,10 @@ def get_places(meridian):
     """
     df = load_cities()
     df["diff"] = df["lng"].apply(lambda x: min(abs(x - meridian), abs(meridian - x)))
-    df = df[df["population"] >= 250000]
-    return df.sort_values("diff").head()
+    df = df[df["diff"] <= 0.25]
+    # df = df[df["population"] >= 500000]
+    # df = df.sort_values("diff").head(10)
+    return df.sort_values("population").head()
 
 
 def create_map(meridian):
@@ -67,20 +68,22 @@ def create_map(meridian):
     and markers with closest places.
     """
     figure = folium.Figure(width=1200, height=600)
-    my_map = folium.Map(min_zoom=1, tiles="stamentoner")
+    my_map = folium.Map(min_zoom=2, tiles="stamentoner")
     my_map.add_to(figure)
-    icon = folium.features.CustomIcon("static/papaj.png", icon_size=(40, 50))
-    folium.Marker(location=[89.9, meridian], icon=icon).add_to(my_map)
     folium.PolyLine([[89.9, meridian], [-89.9, meridian]], color="yellow", weight=5).add_to(my_map)
     places = get_places(meridian)
     places["label"] = places.apply(lambda x:
-                                   Markup(f"<b>{x['city']}</b><br>{x['country']}"),
+                                   f"<span style='font-family: Arial'>"
+                                   f"<b>{x['city']}</b><br>{x['country']}<br>"
+                                   f"Off by ca. {round(x['diff']*4, 1)} minutes"
+                                   f"</span>",
                                    axis=1)
     places.apply(lambda x: folium.Marker(location=[x["lat"], x["lng"]],
                                          popup=folium.Popup(
                                              folium.IFrame(x["label"],
-                                                           width=150, height=60)
-                                         )).add_to(my_map),
+                                                           width=180, height=75)
+                                         ), icon=folium.features.CustomIcon("static/papaj.png",
+                                                                            icon_size=(40, 50))).add_to(my_map),
                  axis=1)
     return figure._repr_html_()
 

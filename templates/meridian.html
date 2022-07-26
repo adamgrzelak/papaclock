@@ -1,25 +1,18 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<div>
-  <img src="static/papaj.png" alt="" class="papaj heading">
-  <h2 class="heading">Papa Meridian</h2>
-  <img src="static/papaj.png" alt="" class="papaj heading">
+<div class="container">
+  <a href="{{url_for('home')}}" class="heading"><img src="static/papaj.png" alt="" class="papaj left heading"></a>
+  <h2 class="heading">Solar PapaMeridian</h2>
+  <a href="{{url_for('table')}}" class="heading"><img src="static/papaj.png" alt="" class="papaj right heading"></a>
 </div>
 <div class="map" id="papamap">
   {{ map }}
 </div>
-<div class="footer">
+<div class="container footer">
   <h5>Powered by <a href="http://python-visualization.github.io/folium/">Folium</a></h5>
   <h5>City list by <a href="https://simplemaps.com/data/world-cities">Simple Maps</a></h5>
 </div>
-<script>
-  setInterval(function() {
-    let myRequest = new Request('/get_map');
-    fetch(myRequest).then(response => response.json()).then(function(data) {
-      let data_table = document.getElementById("papamap");
-      data_table.innerHTML = data.papamap;
-    });
-  }, 30000);
-</script>
+<script src="static/meridian.js" charset="utf-8"></script>
+
 {% endblock %}

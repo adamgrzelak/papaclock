@@ -2,22 +2,16 @@
 
 {% block content %}
 
-<div>
-  <img src="static/papaj.png" alt="" class="papaj heading">
-  <h2 class="heading">Papa Clock</h2>
-  <img src="static/papaj.png" alt="" class="papaj heading">
+<div class="container">
+  <a href="{{url_for('home')}}" class="heading"><img src="static/papaj.png" alt="" class="papaj left heading"></a>
+  <h2 class="heading">PapaZones</h2>
+  <a href="{{url_for('meridian')}}" class="heading"><img src="static/papaj.png" alt="" class="papaj right heading"></a>
 </div>
 <div class="table" id="papatable">
   {{ table }}
 </div>
-<script>
-  setInterval(function() {
-    let myRequest = new Request('/get_table');
-    fetch(myRequest).then(response => response.json()).then(function(data) {
-      let data_table = document.getElementById("papatable");
-      data_table.innerHTML = data.table;
-    });
-  }, 100);
-</script>
+<div class="container" id="papaicon">
+</div>
+<script src="static/table.js" charset="utf-8"></script>
 
 {% endblock %}
