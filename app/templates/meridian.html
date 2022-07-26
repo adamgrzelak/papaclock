@@ -2,9 +2,9 @@
 
 {% block content %}
 <div class="container">
-  <a href="{{url_for('home')}}" class="heading"><img src="static/papaj.png" alt="" class="papaj left heading"></a>
+  <a href="{{url_for('home')}}" class="heading"><img src="../static/papaj.png" alt="" class="papaj left heading"></a>
   <h2 class="heading">Solar PapaMeridian</h2>
-  <a href="{{url_for('table')}}" class="heading"><img src="static/papaj.png" alt="" class="papaj right heading"></a>
+  <a href="{{url_for('table')}}" class="heading"><img src="../static/papaj.png" alt="" class="papaj right heading"></a>
 </div>
 <div class="container">
   <h4 class='message'>Rzułta linia wskazuje południk 21:37 wg czasu słonecznego.</h4>
@@ -17,6 +17,6 @@
   <h5>Powered by <a href="http://python-visualization.github.io/folium/">Folium</a></h5>
   <h5>City list by <a href="https://simplemaps.com/data/world-cities">Simple Maps</a></h5>
 </div>
-<script src="static/meridian.js" charset="utf-8"></script>
+<script src="../static/meridian.js" charset="utf-8"></script>
 
 {% endblock %}

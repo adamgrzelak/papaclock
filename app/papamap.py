@@ -8,7 +8,7 @@ def load_cities():
     """
     Load the dataframe with world cities.
     """
-    return pd.read_csv("worldcities.csv", index_col=False)
+    return pd.read_csv("app/worldcities.csv", index_col=False)
 
 
 def get_papa_time():
@@ -82,7 +82,7 @@ def create_map(meridian):
                                          popup=folium.Popup(
                                              folium.IFrame(x["label"],
                                                            width=180, height=75)
-                                         ), icon=folium.features.CustomIcon("static/papaj.png",
+                                         ), icon=folium.features.CustomIcon("app/static/papaj.png",
                                                                             icon_size=(40, 50))).add_to(my_map),
                  axis=1)
     return figure._repr_html_()

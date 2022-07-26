@@ -1,5 +1,5 @@
 from flask import Flask, Markup, render_template, make_response
-from papamap import *
+from app.papamap import *
 
 
 app = Flask(__name__)
@@ -35,7 +35,7 @@ def get_table():
                           escape=False)
     if is_papatime:
         return make_response({"table": table,
-                              "message": "<img src='static/papaj.gif' alt=''>"
+                              "message": "<img src='../static/papaj.gif' alt=''>"
                                           "<h2 class='message'>Gdzieś na świecie jest 21:37!</h2>"})
     else:
         return make_response({"table": table,
