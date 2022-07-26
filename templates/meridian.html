@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div>
+  <img src="static/papaj.png" alt="" class="papaj heading">
+  <h2 class="heading">Papa Meridian</h2>
+  <img src="static/papaj.png" alt="" class="papaj heading">
+</div>
+<div class="map">
+  {{ map }}
+</div>
+<div class="footer">
+  <h5>Powered by <a href="http://python-visualization.github.io/folium/">Folium</a></h5>
+  <h5>City list by <a href="https://simplemaps.com/data/world-cities">Simple Maps</a></h5>
+</div>
+{% endblock %}

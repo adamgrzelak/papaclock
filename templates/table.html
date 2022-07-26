@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Papa Meridian</title>
-    <link rel="stylesheet" href="../static/style.css">
-  </head>
-  <body>
-    <h2>Papa Clock</h2>
-    <div class="table">
-      {{ table }}
-    </div>
-  </body>
-</html>
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div>
+  <img src="static/papaj.png" alt="" class="papaj heading">
+  <h2 class="heading">Papa Clock</h2>
+  <img src="static/papaj.png" alt="" class="papaj heading">
+</div>
+<div class="table">
+  {{ table }}
+</div>
+
+{% endblock %}

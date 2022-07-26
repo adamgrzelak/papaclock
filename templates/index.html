@@ -1,14 +1,14 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Papa Meridian</title>
-    <link rel="stylesheet" href="../static/style.css">
-  </head>
-  <body>
-    <h2>Papa Clock</h2>
-    <div class="map">
-      {{ map }}
-    </div>
-  </body>
-</html>
+{% extends "layout.html" %}
+
+{% block content %}
+<div>
+  <h3>Welcome to</h3>
+  <img src="static/papaj.png" alt="" class="papaj heading">
+  <h1 class="heading">PapaClock</h1>
+  <img src="static/papaj.png" alt="" class="papaj heading">
+</div>
+<div class="links">
+  <a href="{{url_for('meridian')}}" class="heading"><img src="static/papaj.png" alt="" class="papaj-large heading"></a>
+  <a href="{{url_for('table')}}" class="heading"><img src="static/papaj.png" alt="" class="papaj-large heading"></a>
+</div>
+{% endblock %}

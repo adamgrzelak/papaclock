@@ -7,9 +7,13 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    return render_template("index.html")
+
+@app.route("/meridian")
+def meridian():
     meridian = get_papa_meridian()
     papamap = create_map(meridian)
-    return render_template("index.html", map=Markup(papamap))
+    return render_template("meridian.html", map=Markup(papamap))
 
 
 @app.route("/table")

@@ -43,15 +43,11 @@ def get_nearest_timezome():
     df = pd.DataFrame({"timezone": pytz.common_timezones})
     df["time"] = df["timezone"].apply(lambda x: datetime.now(tz=pytz.timezone(x)))
     df["papa"] = df["time"].apply(lambda x: x.replace(hour=21, minute=37, second=0, microsecond=0))
-    df["delta"] = df["papa"] - df["time"]
+    df["delta"] = df.apply(lambda x: min(abs(x["papa"] - x["time"]), abs(x["time"] - x["papa"])), axis=1)
     df = df[(df["delta"] > timedelta(hours=0)) & (df["delta"] < timedelta(hours=1))]
-    df["city"] = df["timezone"].apply(lambda x: str(x.split("/")[-1])).astype(object)
-    places = load_cities().set_index("city")
-    df = df.set_index("city")
-    joint = df.join(places, how="inner").reset_index()
-    joint = joint[joint["population"] >= 1000000]
-    joint["time"] = joint["time"].apply(lambda x: x.strftime("%H:%M"))
-    return joint[["city", "country", "lat", "lng", "time"]]
+    df = df[df["time"] < df["papa"]]
+    df["time"] = df["time"].apply(lambda x: x.strftime("%H:%M"))
+    return df[["timezone", "time"]]
 
 
 def get_places(meridian):
@@ -60,8 +56,8 @@ def get_places(meridian):
     closest to the papa meridian.
     """
     df = load_cities()
-    df["diff"] = (df["lng"] - meridian).abs()
-    df = df[df["population"] >= 500000]
+    df["diff"] = df["lng"].apply(lambda x: min(abs(x - meridian), abs(meridian - x)))
+    df = df[df["population"] >= 250000]
     return df.sort_values("diff").head()
 
 
@@ -71,9 +67,10 @@ def create_map(meridian):
     and markers with closest places.
     """
     figure = folium.Figure(width=1200, height=600)
-    my_map = folium.Map(zoom_start=5, tiles="stamentoner")
+    my_map = folium.Map(min_zoom=1, tiles="stamentoner")
     my_map.add_to(figure)
-    # folium.TileLayer("stamentoner").add_to(my_map)
+    icon = folium.features.CustomIcon("static/papaj.png", icon_size=(40, 50))
+    folium.Marker(location=[89.9, meridian], icon=icon).add_to(my_map)
     folium.PolyLine([[89.9, meridian], [-89.9, meridian]], color="yellow", weight=5).add_to(my_map)
     places = get_places(meridian)
     places["label"] = places.apply(lambda x:
