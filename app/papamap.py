@@ -57,9 +57,8 @@ def get_places(meridian):
     df = load_cities()
     df["diff"] = df["lng"].apply(lambda x: min(abs(x - meridian), abs(meridian - x)))
     df = df[df["diff"] <= 0.25]
-    # df = df[df["population"] >= 500000]
-    # df = df.sort_values("diff").head(10)
-    return df.sort_values("population").head()
+    df = df[df["population"] >= 100000]
+    return df.sort_values("diff").head(10)
 
 
 def create_map(meridian):
@@ -75,7 +74,7 @@ def create_map(meridian):
     places["label"] = places.apply(lambda x:
                                    f"<span style='font-family: Arial'>"
                                    f"<b>{x['city']}</b><br>{x['country']}<br>"
-                                   f"Off by ca. {round(x['diff']*4, 1)} minutes"
+                                   f"Off by ca. {round(x['diff'] * 240)} seconds"
                                    f"</span>",
                                    axis=1)
     places.apply(lambda x: folium.Marker(location=[x["lat"], x["lng"]],
