@@ -83,14 +83,14 @@ def create_map(meridian):
         places["label"] = places.apply(lambda x:
                                        f"<span style='font-family: Arial'>"
                                        f"<b>{x['city']}</b><br>{x['country']}<br>"
-                                       f"Off by ca. {round(x['diff'] * 240)} seconds<br>"
-                                       f"Population: {round(x['population'])}"
+                                       f"Odległość ok. {round(x['diff'] * 240)} sekund<br>"
+                                       f"Liczba ludności: {'{:,.0f}'.format(x['population']).replace(',', ' ')}"
                                        f"</span>",
                                        axis=1)
         places.apply(lambda x: folium.Marker(location=[x["lat"], x["lng"]],
                                              popup=folium.Popup(
                                                  folium.IFrame(x["label"],
-                                                               width=180, height=90)
+                                                               width=240, height=90)
                                              ), icon=folium.features.CustomIcon("app/static/papaj.png",
                                                                                 icon_size=(40, 50))).add_to(my_map),
                      axis=1)
