@@ -25,19 +25,20 @@ def table():
 @app.route("/get_table")
 def get_table():
     def yellow_hour(val):
-        if re.match(r"21:37:\d\d", val) is not None:
+        if re.match(r"21:37:..", val) is not None:
             return f"<span style='color: #F2DF3A; font-weight: bold;'>{val}</span>"
         else:
             return val
     table = get_nearest_timezome()
-    is_papatime = table["time"].apply(lambda x: re.match(r"21:37:\d\d", x) is not None).any()
+    is_papatime = table["time"].apply(lambda x: re.match(r"21:37:..", x) is not None).any()
     table = table.rename(columns={"timezone": "Strefa Czasowa", "time": "Godzina"})
     table = table.to_html(index=False,
-                          formatters={"time": yellow_hour},
+                          formatters={"Godzina": yellow_hour},
                           escape=False)
     if is_papatime:
         return make_response({"table": table,
-                              "message": "<img src='../static/papaj.gif' alt=''>"
+                              "message": "<img src='../static/papaj.gif' alt='' "
+                                         "style='margin-bottom: 2%; border-radius: 2%;'>"
                                           "<h2 class='message'>Gdzieś na świecie jest 21:37!</h2>"})
     else:
         return make_response({"table": table,
