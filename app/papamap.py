@@ -58,11 +58,14 @@ def get_places(meridian):
     """
     df = load_cities()
     df["diff"] = df["lng"].apply(lambda x: min(abs(x - meridian), abs(meridian - x)))
-    df = df[df["diff"] <= 0.25]
+    diff = 0.25
+    while df[df["diff"] <= diff].shape[0] == 0:
+        diff = diff * 2
+    df = df[df["diff"] <= diff]
     pop = 100000
-    while df.shape[0] == 0 and pop > 1:
-        df = df[df["population"] >= pop]
+    while df[df["population"] >= pop].shape[0] == 0 and pop > 1:
         pop = pop / 10
+    df = df[df["population"] >= pop]
     return df.sort_values("diff").head(10)
 
 
