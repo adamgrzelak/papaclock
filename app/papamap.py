@@ -72,7 +72,7 @@ def create_map(meridian):
     and markers with closest places.
     """
     figure = folium.Figure(width=1200, height=600)
-    my_map = folium.Map(min_zoom=2, tiles="stamentoner")
+    my_map = folium.Map(min_zoom=1, location=[0, meridian], zoom_start=2, tiles="stamentoner")
     my_map.add_to(figure)
     folium.PolyLine([[89.9, meridian], [-89.9, meridian]], color="yellow", weight=5).add_to(my_map)
     places = get_places(meridian)
