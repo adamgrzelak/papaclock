@@ -59,7 +59,10 @@ def get_places(meridian):
     df = load_cities()
     df["diff"] = df["lng"].apply(lambda x: min(abs(x - meridian), abs(meridian - x)))
     df = df[df["diff"] <= 0.25]
-    df = df[df["population"] >= 100000]
+    pop = 100000
+    while df.shape[0] == 0 and pop > 1:
+        df = df[df["population"] >= pop]
+        pop = pop / 10
     return df.sort_values("diff").head(10)
 
 
@@ -73,19 +76,21 @@ def create_map(meridian):
     my_map.add_to(figure)
     folium.PolyLine([[89.9, meridian], [-89.9, meridian]], color="yellow", weight=5).add_to(my_map)
     places = get_places(meridian)
-    places["label"] = places.apply(lambda x:
-                                   f"<span style='font-family: Arial'>"
-                                   f"<b>{x['city']}</b><br>{x['country']}<br>"
-                                   f"Off by ca. {round(x['diff'] * 240)} seconds"
-                                   f"</span>",
-                                   axis=1)
-    places.apply(lambda x: folium.Marker(location=[x["lat"], x["lng"]],
-                                         popup=folium.Popup(
-                                             folium.IFrame(x["label"],
-                                                           width=180, height=75)
-                                         ), icon=folium.features.CustomIcon("app/static/papaj.png",
-                                                                            icon_size=(40, 50))).add_to(my_map),
-                 axis=1)
+    if places.shape[0] > 0:
+        places["label"] = places.apply(lambda x:
+                                       f"<span style='font-family: Arial'>"
+                                       f"<b>{x['city']}</b><br>{x['country']}<br>"
+                                       f"Off by ca. {round(x['diff'] * 240)} seconds<br>"
+                                       f"Population: {round(x['population'])}"
+                                       f"</span>",
+                                       axis=1)
+        places.apply(lambda x: folium.Marker(location=[x["lat"], x["lng"]],
+                                             popup=folium.Popup(
+                                                 folium.IFrame(x["label"],
+                                                               width=180, height=90)
+                                             ), icon=folium.features.CustomIcon("app/static/papaj.png",
+                                                                                icon_size=(40, 50))).add_to(my_map),
+                     axis=1)
     return figure._repr_html_()
 
 
