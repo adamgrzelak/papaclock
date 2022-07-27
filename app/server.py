@@ -1,5 +1,6 @@
 from flask import Flask, Markup, render_template, make_response
 from app.papamap import *
+import re
 
 
 app = Flask(__name__)
@@ -24,12 +25,13 @@ def table():
 @app.route("/get_table")
 def get_table():
     def yellow_hour(val):
-        if "21:37" in val:
+        if re.match(r"21:37:\d\d", val) is not None:
             return f"<span style='color: #F2DF3A; font-weight: bold;'>{val}</span>"
         else:
             return val
     table = get_nearest_timezome()
-    is_papatime = table["time"].apply(lambda x: "21:37" in x).any()
+    is_papatime = table["time"].apply(lambda x: re.match(r"21:37:\d\d", x) is not None).any()
+    table = table.rename(columns={"timezone": "Strefa Czasowa", "time": "Godzina"})
     table = table.to_html(index=False,
                           formatters={"time": yellow_hour},
                           escape=False)
