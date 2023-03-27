@@ -1,7 +1,7 @@
 body {
-  background-color: #0078AA;
+  background-color: #0078aa;
   text-align: center;
-  color: #F6F6F6;
+  color: #f6f6f6;
   font-family: Comfortaa;
   margin: 0;
   padding: 0;
@@ -26,7 +26,7 @@ body {
 }
 
 .message {
-  color: #F2DF3A;
+  color: #f2df3a;
 }
 
 .name {
@@ -34,9 +34,10 @@ body {
   text-align: right;
 }
 
-.map, .table {
+.map,
+.table {
   text-align: center;
-  color: #F6F6F6;
+  color: #f6f6f6;
   margin: auto;
 }
 
@@ -46,7 +47,8 @@ table {
   padding: 0 1rem;
 }
 
-th, td {
+th,
+td {
   text-align: center;
   padding: 0 1.5rem;
 }
@@ -75,12 +77,12 @@ tr {
 }
 
 a {
-  color: #F6F6F6;
+  color: #f6f6f6;
   text-decoration: none;
 }
 
 a:hover {
-  color: #F2DF3A;
+  color: #f2df3a;
 }
 
 @media (max-width: 1200px) {
@@ -98,7 +100,6 @@ a:hover {
   .container {
     padding: 0 3%;
   }
-
 }
 
 /* Pallette:

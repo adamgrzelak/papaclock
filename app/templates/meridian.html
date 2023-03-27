@@ -1,21 +1,33 @@
-{% extends "layout.html" %}
-
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <div class="container">
-  <a href="{{url_for('home')}}" class="heading"><img src="../static/papaj.png" alt="" class="papaj left heading"></a>
+  <a href="{{url_for('home')}}" class="heading"
+    ><img src="../static/papaj.png" alt="" class="papaj left heading"
+  /></a>
   <h2 class="heading">Solar PapaMeridian</h2>
-  <a href="{{url_for('table')}}" class="heading"><img src="../static/papaj.png" alt="" class="papaj right heading"></a>
+  <a href="{{url_for('table')}}" class="heading"
+    ><img src="../static/papaj.png" alt="" class="papaj right heading"
+  /></a>
 </div>
 <div class="container">
-  <h4 class='message'>Rzułta linia wskazuje południk 21:37 według czasu słonecznego</h4>
-  <h5 class='message'>Zaznaczono również najbliższe miejscowości</h5>
+  <h4 class="message">
+    Rzułta linia wskazuje południk 21:37 według czasu słonecznego
+  </h4>
+  <h5 class="message">Zaznaczono również najbliższe miejscowości</h5>
 </div>
-<div class="map" id="papamap">
-  {{ map }}
-</div>
+<div class="map" id="papamap">{{ map }}</div>
 <div class="container footer">
-  <h5>Powered by <a href="http://python-visualization.github.io/folium/" target="_blank">Folium</a></h5>
-  <h5>City list by <a href="https://simplemaps.com/data/world-cities" target="_blank">Simple Maps</a></h5>
+  <h5>
+    Powered by
+    <a href="http://python-visualization.github.io/folium/" target="_blank"
+      >Folium</a
+    >
+  </h5>
+  <h5>
+    City list by
+    <a href="https://simplemaps.com/data/world-cities" target="_blank"
+      >Simple Maps</a
+    >
+  </h5>
 </div>
 <script src="../static/meridian.js" charset="utf-8"></script>
 
