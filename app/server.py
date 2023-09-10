@@ -5,7 +5,9 @@ from flask import make_response
 from flask import Markup
 from flask import render_template
 
-from app.papamap import *
+from app.papamap import create_map
+from app.papamap import get_nearest_timezome
+from app.papamap import get_papa_meridian
 
 
 app = Flask(__name__)
