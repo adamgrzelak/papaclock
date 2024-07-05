@@ -4,7 +4,7 @@ It's always <code>21:37</code> somewhere...
 
 ### Description
 
-The application shows a lis of places where the current local time
+The application shows a list of places where the current local time
 approaches 21:37 (9:37 p.m.).
 
 ### Deployment
@@ -23,4 +23,4 @@ pip install -r requirements.txt
 gunicorn wsgi:app
 ```
 
-© AG 2022
+© AG 2024

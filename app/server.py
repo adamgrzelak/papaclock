@@ -2,8 +2,8 @@ import re
 
 from flask import Flask
 from flask import make_response
-from flask import Markup
 from flask import render_template
+from markupsafe import Markup
 
 from app.papamap import create_map
 from app.papamap import get_nearest_timezome

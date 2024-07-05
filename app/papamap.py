@@ -85,11 +85,14 @@ def get_places(meridian):
 def create_map(meridian):
     """
     Create HTML code for a Folium map with highlighted papa meridian
-    and markers with closest places.
+    and markers with the closest places.
     """
     figure = folium.Figure(width=1200, height=600)
     my_map = folium.Map(
-        min_zoom=1, location=[0, meridian], zoom_start=2, tiles="stamentoner"
+        min_zoom=1,
+        location=[0, meridian],
+        zoom_start=2,
+        tiles="OpenStreetMap",
     )
     my_map.add_to(figure)
     folium.PolyLine(
@@ -118,9 +121,3 @@ def create_map(meridian):
             axis=1,
         )
     return figure._repr_html_()
-
-
-if __name__ == "__main__":
-    # papa_meridian = get_papa_meridian()
-    # print(get_places(papa_meridian))
-    print(get_nearest_timezome())
